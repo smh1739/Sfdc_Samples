@@ -1,0 +1,20 @@
+@isTest
+public class DailyLeadProcessorTest {
+    public static String Cron_Exp = '0 55 18 5 2 ?';
+	@testSetup
+    public static void testsetup(){
+        List<Lead> l_list = new List<Lead>();
+        for(Integer i = 0; i < 101; i++){
+            Lead l = new Lead(LastName='Test'+i,Company='ABC',Status = 'Open - Not Contacted');
+            l_list.add(l);
+        }
+        insert l_list;
+    }
+    
+    public static testmethod void method(){
+        DailyLeadProcessor dlp = new DailyLeadProcessor();
+        Test.startTest();
+        System.schedule('Fill LeadStatus', Cron_Exp, dlp);
+        Test.stopTest();
+    }
+}
