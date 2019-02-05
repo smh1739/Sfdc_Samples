@@ -1,0 +1,21 @@
+@isTest
+public class AddPrimaryContactTest {
+	 public static testmethod void method(){
+        List<Account> accounts = new List<Account>();        
+        for (Integer i = 0; i < 101; i++) {
+            if(i < 51) {
+                accounts.add(new Account(name='Test Account'+i, BillingState = 'NY'));
+            }else{
+                accounts.add(new Account(name='Test Account'+i, BillingState = 'CA'));
+            }
+        }
+        insert accounts;
+        Contact c = new Contact(FirstName = 'SampleFirst', LastName = 'SampleLast');
+        insert c;
+  
+        Test.startTest();
+        AddPrimaryContact apc = new AddPrimaryContact(c, 'CA');
+        System.enqueueJob(apc);
+        Test.stopTest();
+    }
+}
